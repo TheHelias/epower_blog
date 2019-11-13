@@ -5,14 +5,14 @@ class BlogPostItem extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        item: {},
+        item: [],
         isLoading: true
       };
     }
   
     componentDidMount() {
       const { match: { params } } = this.props;
-      fetch(`https://epower.ng/wp-json/wp/v2/posts/${params.postID}`)
+      fetch(`https://epower.ng/wp-json/wp/v2/posts?slug=${params.slug}`)
         .then(res => res.json())
         .then(data => this.setState({ item: data, isLoading: false } ));
     }
@@ -24,9 +24,9 @@ class BlogPostItem extends React.Component {
       }
       return (
           <div className=''>
-                 <p>{item.title.rendered}</p>
-                <img alt="post" src={item.featured_image}/>
-                <div dangerouslySetInnerHTML={{ __html: item.content.rendered }} />
+                 <p>{item[0].title.rendered}</p>
+                <img alt="post" src={item[0].featured_image}/>
+                <div dangerouslySetInnerHTML={{ __html: item[0].content.rendered }} />
           </div>
       );
     }

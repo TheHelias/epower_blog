@@ -9,7 +9,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path='/' component={HomePage}/>
-          <Route path='/blogposts/:postID' component={BlogPostItem}></Route>
+          <Route path='/blogposts/:slug' component={BlogPostItem}></Route>
         </Switch>
       </div>
     )

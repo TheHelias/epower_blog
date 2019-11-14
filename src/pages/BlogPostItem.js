@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 class BlogPostItem extends React.Component {
     constructor(props) {
@@ -24,9 +25,10 @@ class BlogPostItem extends React.Component {
       }
       return (
           <div className=''>
-                 <p>{item[0].title.rendered}</p>
+                 <h1  className='header'>{item[0].title.rendered}</h1>
                 <img alt="post" src={item[0].featured_image}/>
                 <div dangerouslySetInnerHTML={{ __html: item[0].content.rendered }} />
+                <Footer/>
           </div>
       );
     }

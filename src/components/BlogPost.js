@@ -73,9 +73,9 @@ export default class BlogPosts extends React.Component {
         const indexOfFirstpost = indexOfLastpost - postsPerPage;
         const currentposts = posts.slice(indexOfFirstpost, indexOfLastpost);
 
-        const renderposts = currentposts.map(post => <div key={post.id}>
+        const renderposts = currentposts.map(post => <div key={post.slug}>
           <img alt="post" src={post.featured_image}/>
-          <Link className="link" to={`/${post.slug}`}><p>{post.title.rendered}</p></Link>
+          <Link className="link" to={`/blogposts/${post.slug}`}><p>{post.title.rendered}</p></Link>
           <p>{post.excerpt.rendered}</p>
         </div>)
 

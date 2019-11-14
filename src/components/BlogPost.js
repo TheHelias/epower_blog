@@ -15,19 +15,15 @@ export default class BlogPosts extends React.Component {
         pageBound: 6,
         isLoading: true
       } 
-      this.handleClick = this.handleClick.bind(this);
-      this.btnNextClick = this.btnNextClick.bind(this);
-      this.btnPrevClick = this.btnPrevClick.bind(this);
-      this.setPrevAndNextBtnClass = this.setPrevAndNextBtnClass.bind(this);
     }
-    handleClick(event) {
+    handleClick = event =>{
       let listid = Number(event.target.id);
       this.setState({
         currentPage: listid
       });
-      this.setPrevAndNextBtnClass(listid);
+      this.PrevAndNextButton(listid);
     }
-    setPrevAndNextBtnClass(listid) {
+    PrevAndNextButton = listid => {
       let totalPage = Math.ceil(this.state.posts.length / this.state.postsPerPage);
       this.setState({isNextBtnActive: 'disabled'});
       this.setState({isPrevBtnActive: 'disabled'});
@@ -43,23 +39,23 @@ export default class BlogPosts extends React.Component {
       }
     }
 
-    btnPrevClick() {
+    PrevButton = () => {
       if((this.state.currentPage -1)%this.state.pageBound === 0 ){
           this.setState({upperPageBound: this.state.upperPageBound - this.state.pageBound});
           this.setState({lowerPageBound: this.state.lowerPageBound - this.state.pageBound});
       }
       let listid = this.state.currentPage - 1;
       this.setState({ currentPage : listid});
-      this.setPrevAndNextBtnClass(listid);
+      this.PrevAndNextButton(listid);
     }
-    btnNextClick() {
+    NextButton = () => {
       if((this.state.currentPage +1) > this.state.upperPageBound ){
           this.setState({upperPageBound: this.state.upperPageBound + this.state.pageBound});
           this.setState({lowerPageBound: this.state.lowerPageBound + this.state.pageBound});
       }
       let listid = this.state.currentPage + 1;
       this.setState({ currentPage : listid});
-      this.setPrevAndNextBtnClass(listid);
+      this.PrevAndNextButton(listid);
     }
 
     componentDidMount () {
@@ -73,7 +69,7 @@ export default class BlogPosts extends React.Component {
         const indexOfFirstpost = indexOfLastpost - postsPerPage;
         const currentposts = posts.slice(indexOfFirstpost, indexOfLastpost);
 
-        const renderposts = currentposts.map(post => <div key={post.slug}>
+        const blogPosts = currentposts.map(post => <div key={post.slug}>
           <img alt="post" src={post.featured_image}/>
           <Link className="link" to={`/blogposts/${post.slug}`}><h3>{post.title.rendered}</h3></Link>
           <p>{post.excerpt.rendered}</p>
@@ -81,17 +77,25 @@ export default class BlogPosts extends React.Component {
 
         let renderPrevBtn = null;
         if(isPrevBtnActive === 'disabled') {
-            renderPrevBtn = <div className={isPrevBtnActive}><span id="btnPrev"> Previous </span></div>
+            renderPrevBtn = <div className={isPrevBtnActive}>
+              <span id="btnPrev"> Previous </span>
+              </div>
         }
         else{
-            renderPrevBtn = <div className={isPrevBtnActive}><a href='#' id="btnPrev" onClick={this.btnPrevClick}> Previous </a></div>
+            renderPrevBtn = <div className={isPrevBtnActive}>
+              <a href='#' id="btnPrev" onClick={this.PrevButton}> Previous </a>
+              </div>
         }
         let renderNextBtn = null;
         if(isNextBtnActive === 'disabled') {
-            renderNextBtn = <div className={isNextBtnActive}><span id="btnNext"> Next </span></div>
+            renderNextBtn = <div className={isNextBtnActive}>
+              <span id="btnNext"> Next </span>
+              </div>
         }
         else{
-            renderNextBtn = <div className={isNextBtnActive}><a href='#' id="btnNext" onClick={this.btnNextClick}> Next </a></div>
+            renderNextBtn = <div className={isNextBtnActive}>
+              <a href='#' id="btnNext" onClick={this.NextButton}> Next </a>
+              </div>
         }
         if (isLoading) {
           return <p>loading...</p>;
@@ -99,7 +103,7 @@ export default class BlogPosts extends React.Component {
         return (
             <div>
               <div className='blog_posts'>
-              {renderposts}
+              {blogPosts}
               </div>
             <div className="pagination">
               {renderPrevBtn}

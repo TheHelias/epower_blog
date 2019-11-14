@@ -75,16 +75,16 @@ export default class BlogPosts extends React.Component {
 
         const renderposts = currentposts.map(post => <div key={post.slug}>
           <img alt="post" src={post.featured_image}/>
-          <Link className="link" to={`/blogposts/${post.slug}`}><p>{post.title.rendered}</p></Link>
+          <Link className="link" to={`/blogposts/${post.slug}`}><h3>{post.title.rendered}</h3></Link>
           <p>{post.excerpt.rendered}</p>
         </div>)
 
         let renderPrevBtn = null;
         if(isPrevBtnActive === 'disabled') {
-            renderPrevBtn = <div className={isPrevBtnActive}><span id="btnPrev"> Prev </span></div>
+            renderPrevBtn = <div className={isPrevBtnActive}><span id="btnPrev"> Previous </span></div>
         }
         else{
-            renderPrevBtn = <div className={isPrevBtnActive}><a href='#' id="btnPrev" onClick={this.btnPrevClick}> Prev </a></div>
+            renderPrevBtn = <div className={isPrevBtnActive}><a href='#' id="btnPrev" onClick={this.btnPrevClick}> Previous </a></div>
         }
         let renderNextBtn = null;
         if(isNextBtnActive === 'disabled') {
@@ -94,14 +94,14 @@ export default class BlogPosts extends React.Component {
             renderNextBtn = <div className={isNextBtnActive}><a href='#' id="btnNext" onClick={this.btnNextClick}> Next </a></div>
         }
         if (isLoading) {
-          return <p>Hold on, your meal is being served...</p>;
+          return <p>loading...</p>;
         }
         return (
-            <div className=''>
-              <div>
+            <div>
+              <div className='blog_posts'>
               {renderposts}
               </div>
-              <div className="pagination">
+            <div className="pagination">
               {renderPrevBtn}
               {renderNextBtn}
             </div>
